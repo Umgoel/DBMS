@@ -22,4 +22,12 @@ select distinct sname from student s, class c where level = "JR" and fid in (sel
 /*ii. Find the names of all classes that either meet in room R128 or have five or more Students enrolled */
 select name from class where room="CR408";
 select count(*) from class;
-commit;
+
+Select c.Cname
+From class c
+Where c.Cname in (	Select e.Cname From Enrolled e Group by e.Cname Having count(*) >=5	);
+                
+-- Query 4
+Select distinct s.Sname 
+From Student s
+Where S.Sname in (	Select e1.Snum From Enrolled e1, Enrolled e2,  Classs c1,Class c2 Where e1.snum = e2.Snum and e1.Cname <> e2.Cname and e1.Cname = c1.Cname and e2.Cname = c2.Cname and c1.meets_at = c2.meets_at );
